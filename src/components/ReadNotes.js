@@ -20,7 +20,7 @@ function ReadNotes({ notes, showStatus, setShowStatus }) {
   return (
     
     <div>
-        <h1>Notes</h1> 
+        <h1>Questions</h1> 
         
       <label>
         <input
@@ -29,7 +29,7 @@ function ReadNotes({ notes, showStatus, setShowStatus }) {
           value="all"
           onChange={e => setShowStatus(e.target.value)}
           />
-        Show All Notes
+        All Questions
       </label>
       
       <label>
@@ -39,7 +39,7 @@ function ReadNotes({ notes, showStatus, setShowStatus }) {
           value="imp"
           onChange={e => setShowStatus(e.target.value)}
           />
-        Show Important Notes
+      Important question
       </label>
       
       <label>
