@@ -30,18 +30,27 @@ function AskQuestion({ handleNewQuestionTitle, newQuestionTitleRef, newQuestionT
                         ref={newNoteContentRef}
                     />
 
-                    <label htmlFor='selectImportance'>Select the Importance: </label>
+                   <br/> <label className='form-label' htmlFor='selectImportance'>Select the Tag: </label>
                     <select
                         id='selectImportance'
                         onChange={handleSelectChange}
                         value={newNoteImportant}
                     >
-                        <option>--Select--</option>
-                        <option>Yes</option>
-                        <option>No</option>
+                        <option>--Tag--</option>
+                        <option>Node</option>
+                        <option>JavaScript</option>
+                        <option>React</option>
+                        <option>HTML</option>
+                        <option>CSS</option>
+                        <option>Angular</option>
+                        <option>MongoBD</option>
+                        <option>AWS</option>
+                        <option>Java</option>
+                        <option>Python</option>
+                        <option>Other</option>
                     </select>
-                </Form.Group>
-                <Button variant="primary" type="submit">
+                </Form.Group> <br/> 
+                <Button className='AskQbts' variant="primary" type="submit">
                     Submit
                 </Button>
             </Form>
