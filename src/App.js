@@ -8,11 +8,23 @@ import CreateNote from './components/CreateNote';
 import EditNote from './components/EditNote';
 import AskQuestion from './components/AskQuestion';
 import RecentQ from './components/RecentQ';
+import QuestionDetailPage from './components/QuestionModal'; // Import the correct path
+
+
 // import { Container, Row, Col, Card, Button, Badge } from 'react-bootstrap';
 
 
 
 function App() {
+
+
+  <Router>
+    <Routes>
+      <Route path="/" exact component={Home} />
+      <Route path="/questions/:id" component={QuestionDetailPage} /> {/* Route for individual question */}
+      {/* Add more routes as needed */}
+    </Routes>
+  </Router>
 
   const [notes, setNotes] = useState([]);
   const [newQuestionTitle, setNewQuestionTitle] = useState('');
@@ -109,6 +121,9 @@ function App() {
       </div>
 
       <Routes>
+      // ...
+
+        <Route path="/questions/:id" render={(props) => <QuestionDetailPage {...props} questions={notes} />} />
 
         <Route path='/' element={<Home notes={notes} showStatus={showStatus} setShowStatus={setShowStatus} />} />
         <Route path='/recentQ' element={<RecentQ notes={notes} showStatus={showStatus} setShowStatus={setShowStatus} />} />

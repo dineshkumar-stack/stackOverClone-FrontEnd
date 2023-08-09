@@ -1,63 +1,90 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../App.css';
-import { Container, Row, Col, Card, Button, Badge } from 'react-bootstrap';
+import { Container, Row, Col, Button, Badge } from 'react-bootstrap';
+import QuestionModal from './QuestionModal'; // Import the QuestionModal component
+// import { Link } from 'react-router-dom';
 
 
 
-function RecentQ({ note, notes, showStatus, setShowStatus }) {
+
+function RecentQ({ note, notes, showStatus, setShowStatus, props }) {
   const filterNotes = (notes, showStatus) => {
     switch (showStatus) {
-      case 'all':
-        return notes;
-      case 'allNode':
-        return notes.filter(note => note.important === "Node");
-      case 'allReact':
-        return notes.filter(note => note.important === "React");
+
       default:
         return notes;
     }
   }
 
 
+  const [selectedQuestion, setSelectedQuestion] = useState(null);
+  const [modalShow, setModalShow] = useState(false);
+
+  const handleViewQuestion = (question) => {
+    setSelectedQuestion(question);
+    setModalShow(true);
+  };
+
+  const [showFullDescription, setShowFullDescription] = useState({});
+
+  const handleToggleDescription = (questionId) => {
+    setShowFullDescription(prevState => ({
+      ...prevState,
+      [questionId]: !prevState[questionId]
+    }));
+  };
+
+
+
   const notesFiltered = filterNotes(notes, showStatus);
-
-
   return (
 
 
     <div className="stack-overflow-clone">
       <Container>
-        <h1 className="sm-6">Recent Questions</h1>
+        <h1 className="mt-4">Recent Questions</h1>
         <Row>
-          {notesFiltered.map(note => (
-
-            <Col key={note.id} sm={6} md={6} lg={6} className="sm-6">
-              <Card>
-                <Card.Body>
-                  <Badge>{note.timeStamp}</Badge>
-                  <Card.Title>{note.title}</Card.Title>
-                  <Card.Text>{note.content}</Card.Text>
+          {notesFiltered.map((note) => (
+            <Col key={note.id} sm={6} md={4} lg={3} className="mt-3">
+              <div className="card">
+                <div className="card-body">
                   <Badge>{note.important}</Badge>
-                  <div>
-                    <Badge variant="primary" key={note.id} className="mr-1">
-                      {note.tag}
-                    </Badge>
-                  </div>
-                  <Button variant="primary" href={`/questions/${note.id}`}>
-                    View Question {note.comments}
-                  </Button>
-                </Card.Body>
-              </Card>
+                  <Badge>{note.timeStamp}</Badge>
+                  <h5 className="card-title">{showFullDescription[note.id]
+                    ? note.title
+                    : `${note.title.slice(0, 50)}...`}</h5>
+                  {note.content && (
+                    <p className="card-text">
+                      {showFullDescription[note.id]
+                        ? note.content
+                        : `${note.content.slice(0, 100)}...`}
+                    </p>
+                  )}
+                  {note.content && note.content.length > 100 && (
+                   <label><Button
+                      variant="link"
+                      onClick={() => handleToggleDescription(note.id)}
+                    >
+                      {showFullDescription[note.id] ? 'View Less' : 'View More'}
+                    </Button></label> 
+                  )}
+
+                  {/* <Link to={`/questions/${note.id}`} className="btn btn-primary mr-2">View Details</Link> */}
+                  <Button variant="primary" onClick={() => handleViewQuestion(note)}>View Question</Button>
+                </div>
+              </div>
             </Col>
           ))}
         </Row>
+        <QuestionModal show={modalShow} onHide={() => setModalShow(false)} question={selectedQuestion} />
       </Container>
+
+
       <footer>
         <p>&copy; 2023 Stack Overflow Clone. All rights reserved.</p>
       </footer>
 
     </div>
-
 
   );
 }
