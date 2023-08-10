@@ -4,6 +4,7 @@ import { Badge } from 'react-bootstrap';
 
 
 
+
 function Home({ notes, showStatus, setShowStatus }) {
   const filterNotes = (notes, showStatus) => {
     switch (showStatus) {
