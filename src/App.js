@@ -121,8 +121,6 @@ function App() {
       </div>
 
       <Routes>
-      // ...
-
         <Route path="/questions/:id" render={(props) => <QuestionDetailPage {...props} questions={notes} />} />
 
         <Route path='/' element={<Home notes={notes} showStatus={showStatus} setShowStatus={setShowStatus} />} />
